@@ -11,5 +11,7 @@ public class Main {
       do {
          wordle.display();
          System.out.println("Guess the word");
+         playerInput = sc.nextLine();
+      } while (!wordle.guess(playerInput.toLowerCase()));
    }
 }

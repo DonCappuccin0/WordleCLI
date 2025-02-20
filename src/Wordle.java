@@ -33,11 +33,9 @@ public class Wordle {
         for (int i = 0; i < 26; ++i) {
             this.availableLetters.add(character++);
         }
-
     }
 
     public void display() {
-        System.out.println(this.wordToGuess);
         int var10001 = this.tries;
         System.out.println("Tries Remaining : " + var10001 + "\nAvailable Letters : " + this.availableLetters.toString().toUpperCase());
     }
@@ -73,7 +71,6 @@ public class Wordle {
                 this.correctLetters.add(playerInput.charAt(i));
             }
         }
-
     }
 
     public void positionChecker(String playerInput) {
@@ -87,6 +84,5 @@ public class Wordle {
                 System.out.println("The letter " + playerInputChar + " is not in the correct place.");
             }
         }
-
     }
 }
