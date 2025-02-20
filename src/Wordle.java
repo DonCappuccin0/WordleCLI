@@ -36,8 +36,7 @@ public class Wordle {
     }
 
     public void display() {
-        int var10001 = this.tries;
-        System.out.println("Tries Remaining : " + var10001 + "\nAvailable Letters : " + this.availableLetters.toString().toUpperCase());
+        System.out.println("Tries Remaining : " +  this.tries + "\nAvailable Letters : " + this.availableLetters.toString().toUpperCase());
     }
 
     public boolean guess(String playerInput) {
