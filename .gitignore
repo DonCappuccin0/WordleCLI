@@ -31,3 +31,4 @@ replay_pid*
 out/
 *.iml
 .idea/
+.DS_Store
