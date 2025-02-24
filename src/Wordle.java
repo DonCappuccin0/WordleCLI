@@ -15,9 +15,10 @@ public class Wordle {
 
     private static class GeneratedWord {
         private static final HttpClient httpClient = HttpClient.newHttpClient();
+
         public static String generate(int wordlength) throws URISyntaxException, IOException, InterruptedException {
             String API_URL = "https://random-word-api.vercel.app/api?words=1&length=";
-            HttpRequest httpRequest = HttpRequest.newBuilder().GET().uri(new URI(API_URL+ wordlength)).build();
+            HttpRequest httpRequest = HttpRequest.newBuilder().GET().uri(new URI(API_URL + wordlength)).build();
             HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             return (httpResponse.body()).replaceAll("[\\[\\]\"]", "");
         }
@@ -28,38 +29,41 @@ public class Wordle {
         this.tries = tries;
         this.correctLetters = new HashSet<>();
         this.availableLetters = new HashSet<>();
-        char character = 'a';
 
-        for (int i = 0; i < 26; ++i) {
-            this.availableLetters.add(character++);
+        for (char c = 'a'; c <= 'z'; c++) {
+            this.availableLetters.add(c);
         }
     }
 
     public void display() {
-        System.out.println("Tries Remaining : " +  this.tries + "\nAvailable Letters : " + this.availableLetters.toString().toUpperCase());
+        System.out.println("Tries Remaining : " + this.tries + "\nAvailable Letters : " + this.availableLetters.toString().toUpperCase());
     }
 
     public boolean guess(String playerInput) {
         if (playerInput.isEmpty()) {
             System.out.println("You're input can't be empty");
             return false;
-        } else if (playerInput.length() != this.wordToGuess.length()) {
+        }
+
+        if (playerInput.length() != this.wordToGuess.length()) {
             System.out.println("You need to type exactly " + this.wordToGuess.length() + " characters.");
             return false;
-        } else if (playerInput.equalsIgnoreCase(this.wordToGuess)) {
+        }
+
+        if (playerInput.equalsIgnoreCase(this.wordToGuess)) {
             System.out.println("GG you guessed the correct word --> " + this.wordToGuess);
             return true;
-        } else {
-            --this.tries;
-            if (this.tries == 0) {
-                System.out.println("All your tries have ended. You lost !\n The correct word was --> " + this.wordToGuess);
-                return true;
-            } else {
-                this.refreshLetters(playerInput);
-                this.positionChecker(playerInput);
-                return false;
-            }
         }
+
+        --this.tries;
+        if (this.tries != 0) {
+            this.refreshLetters(playerInput);
+            this.positionChecker(playerInput);
+            return false;
+        }
+
+        System.out.println("All your tries have ended. You lost !\n The correct word was --> " + this.wordToGuess);
+        return true;
     }
 
     public void refreshLetters(String playerInput) {
